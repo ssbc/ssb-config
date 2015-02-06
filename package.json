@@ -1,6 +1,6 @@
 {
   "name": "ssb-config",
-  "description": "",
+  "description": "load ssb config",'
   "version": "0.0.0",
   "homepage": "https://github.com/dominictarr/ssb-config",
   "repository": {
@@ -13,10 +13,6 @@
     "non-private-ip": "~1.1.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "prepublish": "npm ls &&  npm test",
-    "test": "set -e; for t in test/*.js; do node $t; done"
-  },
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
   "license": "MIT"
 }
