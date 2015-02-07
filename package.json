@@ -1,6 +1,6 @@
 {
   "name": "ssb-config",
-  "description": "load ssb config",'
+  "description": "load ssb config",
   "version": "1.0.0",
   "homepage": "https://github.com/dominictarr/ssb-config",
   "repository": {
