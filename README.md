@@ -5,7 +5,7 @@ Configuration module used by [`scuttlebot`](https://github.com/ssbc/scuttlebot).
 ## Configuration
 
 * `host` *(string)* The domain or ip address for `sbot`. Defaults to your public ip address.
-* `port` *(string|number)* The port for `sbot`. Defaults to `2000`.
+* `port` *(string|number)* The port for `sbot`. Defaults to `8008`.
 * `timeout`: *(number)* Number of milliseconds a replication stream can idle before it's automatically disconnected. Defaults to `30000`.
 * `pub` *(boolean)* Replicate with pub servers. Defaults to `true`.
 * `local` *(boolean)* Replicate with local servers found on the same network via `udp`. Defaults to `true`.
