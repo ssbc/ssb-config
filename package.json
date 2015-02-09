@@ -10,7 +10,7 @@
   "dependencies": {
     "osenv": "~0.1.0",
     "rc": "~0.6.0",
-    "non-private-ip": "~1.1.0"
+    "non-private-ip": "~1.2.0"
   },
   "devDependencies": {},
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
