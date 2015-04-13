@@ -8,7 +8,7 @@ module.exports = require('rc')('ssb', {
   //ipv6 addresses being returned and not working.
   //https://github.com/ssbc/scuttlebot/pull/102
   host: nonPrivate.v4 || '',
-  port: 2000,
+  port: 8008,
   timeout: 30000,
   pub: true,
   local: true,
