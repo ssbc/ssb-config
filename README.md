@@ -5,13 +5,13 @@ Configuration module used by [`scuttlebot`](https://github.com/ssbc/scuttlebot).
 ## example
 
 ``` js
-var config = require('ssb-config')()
+var config = require('ssb-config')
 
 //if you want to set up a test network, that
 //doesn't collide with main ssb pass the name of that network in.
 
-var test_config = require('ssb-config')('testnet')
-
+var test_config = require('ssb-config/inject')('testnet', {port: 9999})
+//you can also pass a second argument, which overrides the default defaults.
 ```
 
 ## Configuration
