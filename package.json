@@ -8,9 +8,10 @@
     "url": "git://github.com/dominictarr/ssb-config.git"
   },
   "dependencies": {
+    "deep-extend": "^0.4.0",
+    "non-private-ip": "^1.2.1",
     "osenv": "~0.1.0",
-    "rc": "~0.6.0",
-    "non-private-ip": "~1.2.0"
+    "rc": "~0.6.0"
   },
   "devDependencies": {},
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
