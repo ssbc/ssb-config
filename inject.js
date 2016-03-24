@@ -17,7 +17,6 @@ module.exports = function (name, override) {
     timeout: 30000,
     pub: true,
     local: true,
-    phoenix: true,
     friends: {
       dunbar: 150,
       hops: 3
@@ -25,6 +24,8 @@ module.exports = function (name, override) {
     gossip: {
       connections: 2
     },
-    path: path.join(home(), '.' + name)
+    path: path.join(home(), '.' + name),
+    master: [],
+    logging: { level: 'notice' }
   }, override || {}))
 }
