@@ -12,6 +12,7 @@ module.exports = function (name, override) {
     //there have been some reports of seemingly non-private
     //ipv6 addresses being returned and not working.
     //https://github.com/ssbc/scuttlebot/pull/102
+    party: true,
     host: nonPrivate.v4 || '',
     port: 8008,
     timeout: 30000,
