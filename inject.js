@@ -5,6 +5,9 @@ var merge = require('deep-extend')
 
 var RC = require('rc')
 
+var SEC = 1e3
+var MIN = 60*SEC
+
 module.exports = function (name, override) {
   name = name || 'ssb'
   return RC(name || 'ssb', merge({
@@ -15,7 +18,7 @@ module.exports = function (name, override) {
     party: true,
     host: nonPrivate.v4 || '',
     port: 8008,
-    timeout: 30000,
+    timeout: 0,
     pub: true,
     local: true,
     friends: {
@@ -23,10 +26,22 @@ module.exports = function (name, override) {
       hops: 3
     },
     gossip: {
-      connections: 2
+      connections: 3
+    },
+    path: path.join(home(), '.' + name),
+    timers: {
+      connection: 0,
+      reconnect: 5*SEC,
+      ping: 5*MIN,
+      handshake: 5*SEC
     },
     path: path.join(home(), '.' + name),
     master: [],
-    logging: { level: 'notice' }
+    logging: { level: 'notice' },
+    party: true //disable quotas
   }, override || {}))
 }
+
+
+
+
