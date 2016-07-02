@@ -10,6 +10,8 @@ var MIN = 60*SEC
 
 module.exports = function (name, override) {
   name = name || 'ssb'
+
+  var HOME = home() || 'browser' //most probably browser
   return RC(name || 'ssb', merge({
     //just use an ipv4 address by default.
     //there have been some reports of seemingly non-private
@@ -28,19 +30,19 @@ module.exports = function (name, override) {
     gossip: {
       connections: 3
     },
-    path: path.join(home(), '.' + name),
+    path: path.join(HOME, '.' + name),
     timers: {
       connection: 0,
       reconnect: 5*SEC,
       ping: 5*MIN,
       handshake: 5*SEC
     },
-    path: path.join(home(), '.' + name),
     master: [],
     logging: { level: 'notice' },
     party: true //disable quotas
   }, override || {}))
 }
+
 
 
 
