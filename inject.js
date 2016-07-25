@@ -27,6 +27,9 @@ module.exports = function (name, override) {
       dunbar: 150,
       hops: 3
     },
+    ws: {
+      port: 8989
+    },
     gossip: {
       connections: 3
     },
@@ -42,8 +45,4 @@ module.exports = function (name, override) {
     party: true //disable quotas
   }, override || {}))
 }
-
-
-
-
 
