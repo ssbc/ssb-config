@@ -1,5 +1,6 @@
 var path = require('path')
-var home = require('osenv').home
+var home = require('os-homedir')
+
 var nonPrivate = require('non-private-ip')
 var merge = require('deep-extend')
 
@@ -10,7 +11,6 @@ var MIN = 60*SEC
 
 module.exports = function (name, override) {
   name = name || 'ssb'
-
   var HOME = home() || 'browser' //most probably browser
   return RC(name || 'ssb', merge({
     //just use an ipv4 address by default.
@@ -45,4 +45,8 @@ module.exports = function (name, override) {
     party: true //disable quotas
   }, override || {}))
 }
+
+
+
+
 

@@ -10,10 +10,11 @@
   "dependencies": {
     "deep-extend": "^0.4.0",
     "non-private-ip": "^1.2.1",
-    "osenv": "~0.1.0",
+    "os-homedir": "^1.0.1",
     "rc": "^1.1.6"
   },
   "devDependencies": {},
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
   "license": "MIT"
 }
+
