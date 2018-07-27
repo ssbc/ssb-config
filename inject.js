@@ -35,7 +35,7 @@ module.exports = function (name, override) {
     },
     connections: {
       incoming: {
-        net: [{ port: 8008, host: "localhost", scope: "local", "transform": "shs" }]
+        net: [{ port: 8008, scope: "private", "transform": "shs" }]
       },
       outgoing: {
         net: [{ transform: "shs" }]
