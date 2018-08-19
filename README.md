@@ -27,6 +27,8 @@ var test_config = require('ssb-config/inject')('testnet', {port: 9999})
 * `path` *(string)* Path to the application data folder, which contains the private key, message attachment data (blobs) and the leveldb backend. Defaults to `$HOME/.ssb`.
 * `master` *(array)* Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 * `logging.level` *(string)* How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
+* `connections.incoming` *(array)* Incoming transports and transformations to listen on
+* `connections.outgoing` *(array)* Outgoing transports and transformations to connect using
 
 There are some configuration options for the sysadmins out there. All configuration is loaded via [`rc`](https://github.com/dominictarr/rc). You can pass any configuration value in as cli arg, env var, or in a file.
 
