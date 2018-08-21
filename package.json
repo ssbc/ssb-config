@@ -8,7 +8,7 @@
     "url": "git://github.com/dominictarr/ssb-config.git"
   },
   "dependencies": {
-    "deep-extend": "^0.4.0",
+    "deep-extend": "^0.6.0",
     "non-private-ip": "^1.2.1",
     "os-homedir": "^1.0.1",
     "rc": "^1.1.6"
