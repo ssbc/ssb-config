@@ -1,11 +1,11 @@
 {
   "name": "ssb-config",
   "description": "load ssb config",
-  "version": "2.2.0",
-  "homepage": "https://github.com/dominictarr/ssb-config",
+  "version": "2.2.1",
+  "homepage": "https://github.com/ssbc/ssb-config",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dominictarr/ssb-config.git"
+    "url": "git://github.com/ssbc/ssb-config.git"
   },
   "scripts": {
     "test": "node test"
