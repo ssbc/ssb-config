@@ -34,7 +34,7 @@ There are some configuration options for the sysadmins out there. All configurat
 
 Two objects to specify `incoming` and `outgoing` transports and transformations for connections.
 
-The default is this. It specifies the default tcp `net`work transport for incoming and outging connections, using secret-handshake/boxstream ([shs](https://github.com/auditdrivencrypto/secret-handshake)) for authentication and encryption.
+The default is the following. It specifies the default TCP `net`work transport for incoming and outging connections, using secret-handshake/boxstream ([shs](https://github.com/auditdrivencrypto/secret-handshake)) for authentication and encryption.
 
 ```json
 "connections": {
@@ -50,11 +50,11 @@ The default is this. It specifies the default tcp `net`work transport for incomi
 },
 ```
 
-If you want to use [TOR](https://torproject.org) to create outgoing connections you can specify this as your. It will use `localhost:9050` as the socks server for creating this.
+If you want to use [TOR](https://torproject.org) to create outgoing connections you can specify your `outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
 
-TODO: make the onion socks server configurable.
-
-TODO: support creating hidden services via `incoming` blocks
+TODO:
+* make the onion socks server configurable.
+* support creating hidden services via `incoming` blocks
 
 ```json
 "connections": {
@@ -64,7 +64,7 @@ TODO: support creating hidden services via `incoming` blocks
   },
 ```
 
-If you want to run a peer behind NAT or other kind proxy but still want it to be able to create invites, you can specify a `public` scope in your `incoming.net` by defining the `external` paramter like this:
+If you want to run a peer behind NAT or other kind of proxy but still want sbot to be able to create invites for the outside addres, you can specify a `public` scope as your `incoming.net` by defining the `external` paramter like this:
 
 ```json
 "incoming": {
@@ -81,7 +81,7 @@ If you want to run a peer behind NAT or other kind proxy but still want it to be
 },
 ```
 
-One thing to nice is that you _need_ `incoming` connections for Apps (like patchwork or git-ssb) to function. By default they use the same authentication mechanism (shs) to grant access to the database, choosing access levels depending on the keypair that opens the connection. If you connect to yourself, you get full access (query and publish). If a remote peer connects, it can only replicate. So be sure to have **at least one** `incoming` connection.
+One thing to notice is that you _need_ `incoming` connections for Apps (like patchwork or git-ssb) to function. By default they use the same authentication mechanism (shs) to grant access to the database, choosing access levels depending on the keypair that opens the connection. If you connect to yourself, you get full access (query and publish). If a remote peer connects, it can only replicate. So be sure to have **at least one** `incoming` connection.
 
 That beeing said, the overhead of encryption for local applications can be very high, especially on low-powered devices. For this use-case there is a `noauth` transform which by-passes the authentication and grants full access to anybody that can connect to it. **hint:** *This is risky! it might expose private messages or enables people to publish as you!* Therefore be sure to bind the listener to `localhost` or use the `unix` socket. The `unix` file socket is creted as `$HOME/.ssb/socket` by default and has permissions such that only the user running `sbot server` can open it, just like the `.ssb/secret` file.
 
