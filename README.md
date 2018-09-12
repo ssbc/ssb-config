@@ -50,11 +50,7 @@ The default is the following. It specifies the default TCP `net`work transport f
 },
 ```
 
-If you want to use [TOR](https://torproject.org) to create outgoing connections you can specify your `outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
-
-TODO:
-* make the onion socks server configurable.
-* support creating hidden services via `incoming` blocks
+If you want to use [Tor](https://torproject.org) to create outgoing connections you can specify your `outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
 
 ```json
 "connections": {
@@ -69,14 +65,8 @@ If you want to run a peer behind NAT or other kind of proxy but still want sbot 
 ```json
 "incoming": {
 "net": [
-
-  { "scope": "public",  "external": ["cryptop.home"],
-    "transform": "shs", "port": 8008
-  },
-  
-  { "scope": "private",
-    "transform": "shs", "port": 8008, "host": "internal1.con.taine.rs"
-  },
+  { "scope": "public",  "external": ["cryptop.home"], "transform": "shs", "port": 8008 },
+  { "scope": "private", "transform": "shs", "port": 8008, "host": "internal1.con.taine.rs" },
 ]
 },
 ```
@@ -87,12 +77,8 @@ That beeing said, the overhead of encryption for local applications can be very 
 
 ```json
 "incoming": {
-  "unix": [{"scope":"local", "transform":"noauth"}],
-  "net": [{
-    "scope": "local", "transform": "noauth",
-    "port": 8009, "host": "localhost"
-  }
-]
+  "unix": [{ "scope":"local", "transform":"noauth" }],
+  "net": [{ "scope": "local", "transform": "noauth", "port": 8009, "host": "localhost" }]
 },
 ```
 
