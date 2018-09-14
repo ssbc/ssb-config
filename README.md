@@ -38,15 +38,12 @@ The default is the following. It specifies the default TCP `net`work transport f
 
 ```json
 "connections": {
-
-"incoming": {
-  "net": [{ "port": 8008, "scope": "private", "transform": "shs" }]
-},
-
-"outgoing": {
-  "net": [{ "transform": "shs" }]
-}
-
+  "incoming": {
+    "net": [{ "port": 8008, "scope": "private", "transform": "shs" }]
+  },
+  "outgoing": {
+    "net": [{ "transform": "shs" }]
+  }
 },
 ```
 
@@ -54,20 +51,20 @@ If you want to use [Tor](https://torproject.org) to create outgoing connections 
 
 ```json
 "connections": {
-    "outgoing": {
-      "onion": [{ "transform": "shs" }]
-    }
-  },
+  "outgoing": {
+    "onion": [{ "transform": "shs" }]
+  }
+},
 ```
 
 If you want to run a peer behind NAT or other kind of proxy but still want sbot to be able to create invites for the outside addres, you can specify a `public` scope as your `incoming.net` by defining the `external` paramter like this:
 
 ```json
 "incoming": {
-"net": [
-  { "scope": "public",  "external": ["cryptop.home"], "transform": "shs", "port": 8008 },
-  { "scope": "private", "transform": "shs", "port": 8008, "host": "internal1.con.taine.rs" },
-]
+  "net": [
+    { "scope": "public",  "external": ["cryptop.home"], "transform": "shs", "port": 8008 },
+    { "scope": "private", "transform": "shs", "port": 8008, "host": "internal1.con.taine.rs" },
+  ]
 },
 ```
 
