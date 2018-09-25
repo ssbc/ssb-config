@@ -39,7 +39,7 @@ The default is the following. It specifies the default TCP `net`work transport f
 ```json
 "connections": {
   "incoming": {
-    "net": [{ "port": 8008, "scope": "private", "transform": "shs" }]
+    "net": [{ "port": 8008, "scope": "public", "transform": "shs" }]
   },
   "outgoing": {
     "net": [{ "transform": "shs" }]
@@ -57,7 +57,7 @@ If you want to use [Tor](https://torproject.org) to create outgoing connections 
 },
 ```
 
-If you want to run a peer behind NAT or other kind of proxy but still want sbot to be able to create invites for the outside addres, you can specify a `public` scope as your `incoming.net` by defining the `external` paramter like this:
+If you want to run a peer behind NAT or other kind of proxy but still want sbot to be able to create invites for the outside addres, you can specify a `public` scope as your `incoming.net` by defining the `external` parameter like this:
 
 ```json
 "incoming": {
@@ -74,10 +74,12 @@ That beeing said, the overhead of encryption for local applications can be very 
 
 ```json
 "incoming": {
-  "unix": [{ "scope":"local", "transform":"noauth" }],
-  "net": [{ "scope": "local", "transform": "noauth", "port": 8009, "host": "localhost" }]
+  "unix": [{ "scope":"device", "transform":"noauth" }],
+  "net": [{ "scope": "device", "transform": "noauth", "port": 8009, "host": "localhost" }]
 },
 ```
+
+The local plugin inside scuttlebot will use the first incoming connection of either public or private scope. 
 
 ## License
 
