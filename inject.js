@@ -12,7 +12,7 @@ var MIN = 60*SEC
 module.exports = function (name, override) {
   name = name || 'ssb'
   var HOME = home() || 'browser' //most probably browser
-  var port = override.port || 8008
+  var port = override && override.port || 8008
   return RC(name || 'ssb', merge({
     //just use an ipv4 address by default.
     //there have been some reports of seemingly non-private
