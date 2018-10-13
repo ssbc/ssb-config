@@ -12,15 +12,14 @@ var MIN = 60*SEC
 module.exports = function (name, override) {
   name = name || 'ssb'
   var HOME = home() || 'browser' //most probably browser
-  var port = override && override.port || 8008
-  return RC(name || 'ssb', merge({
+  var result = RC(name || 'ssb', merge({
     //just use an ipv4 address by default.
     //there have been some reports of seemingly non-private
     //ipv6 addresses being returned and not working.
     //https://github.com/ssbc/scuttlebot/pull/102
     party: true,
     host: nonPrivate.v4 || '',
-    port: port,
+    port: 8008,
     timeout: 0,
     pub: true,
     local: true,
@@ -35,9 +34,6 @@ module.exports = function (name, override) {
       connections: 3
     },
     connections: {
-      incoming: {
-        net: [{ port: port, scope: "public", "transform": "shs" }]
-      },
       outgoing: {
         net: [{ transform: "shs" }]
       }
@@ -61,19 +57,15 @@ module.exports = function (name, override) {
       sign: null
     },
     master: [],
-    logging: { level: 'notice' },
-    party: true //disable quotas
+    logging: { level: 'notice' }
   }, override || {}))
+
+  if (!result.connections.incoming) {
+    result.connections.incoming = {
+      net: [{ host: result.host, port: result.port, scope: "public", "transform": "shs" }]
+    }
+  }
+  return result
 }
-
-
-
-
-
-
-
-
-
-
 
 
