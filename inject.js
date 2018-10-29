@@ -18,7 +18,7 @@ module.exports = function (name, override) {
     //ipv6 addresses being returned and not working.
     //https://github.com/ssbc/scuttlebot/pull/102
     party: true,
-    host: nonPrivate.v4 || '',
+    host: nonPrivate.v4 || nonPrivate.private.v4 || '',
     port: 8008,
     timeout: 0,
     pub: true,
@@ -61,9 +61,23 @@ module.exports = function (name, override) {
   }, override || {}))
 
   if (!result.connections.incoming) {
+      var net1 = { port: result.port, scope: "public", "transform": "shs" }
+      if (result.host) net1.host = result.host
+      var net2 = { port: result.port, scope: "device", "transform": "shs" }
+      // host intentionally left blank in net2
+
+      var ws1 = { port: result.ws.port, scope: "public", "transform": "shs" }
+      if (result.host) ws1.host = result.host
+      var ws2 = { port: result.ws.port, scope: "device", "transform": "shs" }
+      // host intentionally left blank in ws2
+
     result.connections.incoming = {
-      net: [{ host: result.host, port: result.port, scope: "public", "transform": "shs" }],
-      ws: [{ host: result.host, port: result.ws.port, scope: "device", "transform": "shs" }]
+      net: [net1],
+      ws: [ws1]
+    }
+    if (result.host && result.host !== '127.0.0.1' && result.host !== 'localhost') {
+      result.connections.incoming.net.push(net2) 
+      result.connections.incoming.ws.push(ws2) 
     }
   }
   return result
