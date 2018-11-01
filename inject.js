@@ -62,11 +62,13 @@ module.exports = function (name, override) {
 
   if (!result.connections.incoming) {
     result.connections.incoming = {
-      net: [{ host: result.host, port: result.port, scope: "public", "transform": "shs" }],
-      ws: [{ host: result.host, port: result.ws.port, scope: "device", "transform": "shs" }]
+      net: [{ host: result.host || '::', port: result.port, scope: ["device", "local", "public"], "transform": "shs"}],
+      ws: [{ host: result.host || '::', port: result.ws.port, scope: ["device", "local", "public"], "transform": "shs" }]
     }
   }
+
   return result
 }
+
 
 
