@@ -59,7 +59,7 @@ module.exports = function (name, override) {
     logging: { level: 'notice' }
   }, override || {}))
 
-  result.keys = ssbKeys.loadOrCreateSync(path.join(result.path, 'secret')),
+  result.keys = ssbKeys.loadOrCreateSync(path.join(result.path, 'secret'))
 
   if (!result.connections.incoming) {
     result.connections.incoming = {
