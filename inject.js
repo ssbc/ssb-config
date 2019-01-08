@@ -1,10 +1,9 @@
 var path = require('path')
 var home = require('os-homedir')
-
 var nonPrivate = require('non-private-ip')
 var merge = require('deep-extend')
-
 var RC = require('rc')
+var ssbKeys = require('ssb-keys')
 
 var SEC = 1e3
 var MIN = 60*SEC
@@ -59,6 +58,8 @@ module.exports = function (name, override) {
     master: [],
     logging: { level: 'notice' }
   }, override || {}))
+
+  result.keys = ssbKeys.loadOrCreateSync(path.join(result.path, 'secret')),
 
   if (!result.connections.incoming) {
     result.connections.incoming = {
