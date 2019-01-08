@@ -102,6 +102,7 @@ Each transport can have an array of different configurations passed to it, these
   - `private` - TODO
   - `public` - TODO
 - `external` *(array of strings)* ... TODO
+- `server` .... TODO ??
 
 ---
 
