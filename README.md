@@ -52,6 +52,7 @@ All configuration is loaded via [`rc`](https://github.com/dominictarr/rc). This 
 Options:
 
 * `connections` *(object)* Details `incoming` and `outgoing` connections behaviour (see below)
+* `remote` ... TODO ... a multisever address for ... (in the future this may be deprecated / derived from `connections`
 * `timeout`: *(number)* Number of milliseconds a replication stream can idle before it's automatically disconnected. Defaults to `30000`.
 * `pub` *(boolean)* Replicate with pub servers. Defaults to `true`.
 * `local` *(boolean)* Replicate with local servers found on the same network via `udp`. Defaults to `true`.
@@ -61,7 +62,6 @@ Options:
 * `path` *(string)* Path to the application data folder, which contains the private key, message attachment data (blobs) and the leveldb backend. Defaults to `$HOME/.ssb`.
 * `master` *(array)* Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 * `logging.level` *(string)* How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
-* `remote` ... TODO (this was formerly undocumented but came up in conversation)
 
 Deprecated Options:
 * `host` *(string)* The domain or ip address for `sbot`. Defaults to your public ip address.
