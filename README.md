@@ -101,6 +101,8 @@ Each transport can have an array of different configurations passed to it, these
 - `scope` *(string)* ... TODO
   - `private` - TODO
   - `public` - TODO
+  - `local` - TODO
+  - `device` - TODO
 - `external` *(array of strings)* ... TODO
 - `server` .... TODO ??
 
