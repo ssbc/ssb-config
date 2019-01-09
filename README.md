@@ -42,7 +42,7 @@ returns you the stock standard config for starting an `ssb-server`
 ### `require('ssb-config/inject')(appName, opts) => Object`
 
 A function which takes:
-- `appName` *(string)* which declares where to look for further config, where to readand write databases. Stores data in `~/.${appName}`, defaults to `ssb` (so data in `~/.ssb`).
+- `appName` *(string)* which declares where to look for further config, where to read and write databases. Stores data in `~/.${appName}`, defaults to `ssb` (so data in `~/.ssb`).
 - `opts` *(object)* an object which is fed into the config generation as a bunch of defaults (see 'Configuration' below)
 
 ## Configuration
@@ -50,7 +50,6 @@ A function which takes:
 All configuration is loaded via [`rc`](https://github.com/dominictarr/rc). This means the final config is a result of config collected from `opts` passed into the inject method, cli args, env var, and config (e.g. `~/.ssb/config`). See the rc repo for full details.
 
 Options:
-
 * `connections` *(object)* Details `incoming` and `outgoing` connections behaviour (see below)
 * `remote` ... TODO ... a multisever address for ... (in the future this may be deprecated / derived from `connections`
 * `timeout`: *(number)* Number of milliseconds a replication stream can idle before it's automatically disconnected. Defaults to `30000`.
@@ -66,8 +65,10 @@ Options:
 Deprecated Options:
 * `host` *(string)* The domain or ip address for `sbot`. Defaults to your public ip address.
 * `port` *(string|number)* The port for `sbot`. Defaults to `8008`.
+* `ws` TODO
 
 You should use `connections` to more explicitly configure connections.
+These values are currently only used to generate `connections.incoming` if that option isn't provided. The raw options are no longer returned in the final config - this is to ensure we don't have multiple places where different `host` / `port` / `ws` are being set!
 
 ### `connections`
 
