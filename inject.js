@@ -69,9 +69,10 @@ module.exports = function (name, override) {
   }
 
   // *** LEGACY TIDYUP ***
-  delete result.host
-  delete result.port
-  delete result.ws
+// breaks ssb-server/test/bin.js, TODO fix it.
+//  delete result.host
+//  delete result.port
+//  delete result.ws
 
   return result
 }
