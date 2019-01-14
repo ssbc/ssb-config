@@ -1,7 +1,7 @@
 {
   "name": "ssb-config",
   "description": "load ssb config",
-  "version": "2.3.7",
+  "version": "2.3.9",
   "homepage": "https://github.com/ssbc/ssb-config",
   "repository": {
     "type": "git",
@@ -16,7 +16,10 @@
     "os-homedir": "^1.0.1",
     "rc": "^1.1.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ssb-server": "latest",
+    "tape": "^4.9.2"
+  },
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
   "license": "MIT"
 }
