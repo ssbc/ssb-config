@@ -3,6 +3,8 @@ var home = require('os-homedir')
 var merge = require('deep-extend')
 var nonPrivate = require('non-private-ip')
 var ssbKeys = require('ssb-keys')
+var get = require('lodash.get')
+var fixConnections = require('./util/fix-connections')
 
 var SEC = 1e3
 var MIN = 60 * SEC
@@ -25,11 +27,6 @@ module.exports = function setDefaults (name, config) {
     gossip: {
       connections: 3
     },
-    // *** LEGACY *** (used to generate default connections.incoming)
-    host: nonPrivate.v4 || '',
-    port: 8008,
-    ws: { port: 8989 },
-    // **************
     connections: {
       outgoing: {
         net: [{ transform: 'shs' }]
@@ -59,18 +56,23 @@ module.exports = function setDefaults (name, config) {
 
   if (!config.connections.incoming) {
     config.connections.incoming = {
-      net: [{ host: config.host || '::', port: config.port, scope: ['device', 'local', 'public'], 'transform': 'shs' }],
-      ws: [{ host: config.host || '::', port: config.ws.port, scope: ['device', 'local', 'public'], 'transform': 'shs' }]
+      net: [{
+        host: config.host || nonPrivate.v4 || '::',
+        port: config.port || 8008,
+        scope: ['device', 'local', 'public'],
+        transform: 'shs'
+      }],
+      ws: [{
+        host: config.host || nonPrivate.v4 || '::',
+        port: get(config, 'ws.port', 8989),
+        scope: ['device', 'local', 'public'],
+        transform: 'shs'
+      }]
     }
   }
+  config = fixConnections(config)
 
   config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
-
-  // *** LEGACY TIDYUP ***
-  // breaks ssb-server/test/bin.js, TODO fix it.
-  // delete config.host
-  // delete config.port
-  // delete config.ws
 
   return config
 }
