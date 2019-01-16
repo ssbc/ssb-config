@@ -2,8 +2,8 @@ var test = require('tape')
 var Server = require('ssb-server')
 var home = require('os-homedir')()
 
-var defaultConfig = require('./')
-var Config = require('./inject')
+var defaultConfig = require('../')
+var Config = require('../inject')
 
 test('Default config', t => {
   t.equal(defaultConfig.path, `${home}/.ssb`, 'has default ~/.ssb folder')

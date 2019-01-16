@@ -2,6 +2,7 @@ var path = require('path')
 var home = require('os-homedir')
 var merge = require('deep-extend')
 var nonPrivate = require('non-private-ip')
+var ssbKeys = require('ssb-keys')
 
 var SEC = 1e3
 var MIN = 60 * SEC
@@ -62,6 +63,8 @@ module.exports = function setDefaults (name, config) {
       ws: [{ host: config.host || '::', port: config.ws.port, scope: ['device', 'local', 'public'], 'transform': 'shs' }]
     }
   }
+
+  config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
 
   // *** LEGACY TIDYUP ***
   // breaks ssb-server/test/bin.js, TODO fix it.
