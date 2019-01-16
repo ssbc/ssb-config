@@ -3,7 +3,7 @@ var get = require('lodash.get')
 module.exports = function getNet (config) {
   var connection = get(config, 'connections.incoming.net', [])
     .find(function (transport) {
-      return isPublic(transport)
+      return isAccessible(transport)
     })
 
   if (!connection) return {}
@@ -14,6 +14,7 @@ module.exports = function getNet (config) {
   }
 }
 
-function isPublic (transport) {
-  return transport.scope === 'public' || transport.scope.includes('public')
+function isAccessible (transport) {
+  return transport.scope === 'private' || transport.scope.includes('private') ||
+    transport.scope === 'public' || transport.scope.includes('public')
 }
