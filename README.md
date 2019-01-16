@@ -96,15 +96,18 @@ A **transport** is a vehicle or avenue for communication. The following transpor
 Each transport can have an array of different configurations passed to it, these are objects with properties:
 - `transform` *(string)* determines whether traffic is encrypted, and if so how.
   - `shs` - secret handashake
-  - `noauth` - no encryption
+  - `noauth` - no encryption, any connection via `noauth` is considered authorized. **use only with `device` scope or unix socket**
 - `port` *(integer)*
 - `host` *(string)* only relevant for ... TODO
-- `scope` *(string)* ... TODO
-  - `private` - TODO
-  - `public` - TODO
-  - `local` - TODO
-  - `device` - TODO
-- `external` *(array of strings)* ... TODO
+- `scope` *(string|array(string))* scope determins the set of network interfaces to bind the server to, and getAddress(scope) returns the relavant addresses. If scope is an array, then the server will bind to all the selected ports. default is `["device", "local", "public"]`.
+  applies directly to tcp based transports (net, ws) but for other transports (unix, tor) is still important,
+because `getAddress('device')` should return a `unix`  transport (if configured) because you can only connect to unix sockets if you have fs access,
+likewise, `onion` should be in the public scope, because you can connect to it over the internet.
+  - `private` - bind only to _local network_ i.e. wifi/lan
+  - `public` - bind to public ip address (it's likely you do not have a public address on an end device, but some networks do)
+  - `local` - alias to private
+  - `device` - "localhost". accessable only on the same device.
+- `external` *(array of strings)* ... for use in combination with public scope. this is the external domain given out as the address to peers.
 - `server` .... TODO ??
 
 ---
