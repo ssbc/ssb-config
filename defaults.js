@@ -58,16 +58,16 @@ module.exports = function setDefaults (name, config) {
 
   if (!config.connections.incoming) {
     config.connections.incoming = {
-      net: [{ host: config.host, port: config.port, scope: ["device", "local", "public"], 'transform': 'shs' }],
-      ws: [{ host: config.host, port: config.ws.port, scope: ["device", "local", "public"], 'transform': 'shs' }]
+      net: [{ host: config.host || '::', port: config.port, scope: ['device', 'local', 'public'], 'transform': 'shs' }],
+      ws: [{ host: config.host || '::', port: config.ws.port, scope: ['device', 'local', 'public'], 'transform': 'shs' }]
     }
   }
 
   // *** LEGACY TIDYUP ***
   // breaks ssb-server/test/bin.js, TODO fix it.
-  // delete result.host
-  // delete result.port
-  // delete result.ws
+  // delete config.host
+  // delete config.port
+  // delete config.ws
 
   return config
 }

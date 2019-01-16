@@ -7,5 +7,3 @@ module.exports = function (name, override) {
   var config = setDefaults(name, rc)
   return config
 }
-
-
