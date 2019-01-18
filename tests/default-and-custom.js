@@ -25,5 +25,22 @@ test('Custom config', t => {
 })
 
 
+test('Custom config', t => {
+  var config = Config('testnet', {
+    incoming: {
+      net: [{scope: 'public', host: 'whatever.com', transform: 'shs'}] //default port
+    }
+  })
+
+  t.equal(config.path, `${home}/.testnet`, 'adjusts path to match appname')
+  t.equal(config.port, 8008, 'e.g. has default port')
+
+  t.end()
+})
+
+
+
+
+
 
 
