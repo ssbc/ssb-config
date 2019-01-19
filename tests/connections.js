@@ -121,3 +121,35 @@ test('setting connections.incoming explicitly with no ws', t => {
 
   t.end()
 })
+
+test('incoming net connection has no port configured', t => {
+  var config = Config('testnet', {
+    connections: {
+      incoming: {
+        net: [{ host: 'pub.mixmix.io', scope: 'public' }]
+      }
+    }
+  })
+
+  var { port } = config.connections.incoming.net[0]
+  t.equal(port, 8008, 'net: sets default port in connections')
+  t.equal(config.port, 8008, 'net: [LEGCACY] default config.port is set')
+
+  t.end()
+})
+
+test('incoming ws connection has no port configured', t => {
+  var config = Config('testnet', {
+    connections: {
+      incoming: {
+        ws: [{ host: 'pub.mixmix.io', scope: 'public' }]
+      }
+    }
+  })
+
+  var { port } = config.connections.incoming.ws[0]
+  t.equal(port, 8989, 'ws: sets default port in connections')
+  t.equal(config.ws.port, 8989, 'ws: [LEGCACY] default config.ws.port is set')
+
+  t.end()
+})

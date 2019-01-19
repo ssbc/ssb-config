@@ -7,7 +7,6 @@ module.exports = function getNet (config) {
     })
 
   if (!connection) return
-  if (!connection.host || !connection.port) throw new Error('ssb-config require ws settings with host AND port')
 
   return connection
 }

@@ -1,5 +1,6 @@
 var getNet = require('./get-net')
 var getWS = require('./get-ws')
+var defaultPorts = require('../default-ports')
 
 // *** BACKSTORY ***
 // there has been an evolution of how connection host:port and ws are set
@@ -16,6 +17,11 @@ module.exports = function fixConnections (config) {
   const net = getNet(config) || {}
   const ws = getWS(config) || {}
 
+  // Add default ports
+  if (net.host && !net.port) net.port = defaultPorts.net
+  if (ws.host && !ws.port) ws.port = defaultPorts.ws
+
+  // [LEGACY] ensure host:port + ws are set
   var errors = []
   if (config.host && net.host) {
     if (config.host !== net.host) errors.push('net host')
@@ -28,7 +34,6 @@ module.exports = function fixConnections (config) {
   }
   if (errors.length) throw new Error('ssb-config: conflicting connection settings for: ' + errors.join(', '))
 
-  // *** LEGACY (ensure host:port + ws are set) ***
   config.host = net.host || ws.host
   config.port = net.port
   config.ws = ws
