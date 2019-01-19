@@ -102,3 +102,22 @@ test('CONFLICTING custom host:port connections.incoming settings', t => {
 
   t.end()
 })
+
+test('setting connections.incoming explicitly with no ws', t => {
+  // because we don't want websockets active
+
+  var config = Config('testnet', {
+    connections: {
+      incoming: {
+        net: [{ host: 'pub.mixmix.io', port: 23456, scope: 'public' }]
+        // ws: [{ host: 'pub.mixmix.io', port: 23457, scope: 'public' }]
+      }
+    }
+  })
+
+  t.equal(config.connections.incoming.ws, undefined, 'no ws set in connection.incoming')
+  t.equal(config.ws.port, undefined, 'ws: [LEGCACY] no config.ws.port set')
+  t.equal(config.host, 'pub.mixmix.io', 'host still derived from net setting')
+
+  t.end()
+})

@@ -6,12 +6,10 @@ module.exports = function getNet (config) {
       return isAccessible(transport)
     })
 
-  if (!connection) return {host: undefined, port: 8989}
+  if (!connection) return
+  if (!connection.host || !connection.port) throw new Error('ssb-config require ws settings with host AND port')
 
-  return {
-    host: connection.host,
-    port: connection.port || 8989
-  }
+  return connection
 }
 
 function isAccessible (transport) {

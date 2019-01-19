@@ -13,8 +13,8 @@ var getWS = require('./get-ws')
 //   - writes host,port,ws settings based on the connections.incoming setting
 
 module.exports = function fixConnections (config) {
-  const net = getNet(config)
-  const ws = getWS(config)
+  const net = getNet(config) || {}
+  const ws = getWS(config) || {}
 
   var errors = []
   if (config.host && net.host) {
@@ -29,7 +29,7 @@ module.exports = function fixConnections (config) {
   if (errors.length) throw new Error('ssb-config: conflicting connection settings for: ' + errors.join(', '))
 
   // *** LEGACY (ensure host:port + ws are set) ***
-  config.host = net.host
+  config.host = net.host || ws.host
   config.port = net.port
   config.ws = ws
 
