@@ -1,7 +1,7 @@
 const Server = require('ssb-server')
   .use(require('ssb-server/plugins/master'))
 
-const config = require('./server-default-config')
+const config = require('./server-custom-config')
 
 const server = Server(config)
 writeManifest(server)
