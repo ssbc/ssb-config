@@ -34,9 +34,9 @@ test('Server startup - default config', t => {
       Client(defaultConfig.keys, defaultConfig, (err, ssb) => {
         if (err) { 
           console.log(err)
+          
           server.send({ action: 'CLOSE' })
-          t.end()
-          return
+          server.kill()
         }
 
         t.false(err, 'remote connection to server works')
