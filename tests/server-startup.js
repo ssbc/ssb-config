@@ -1,7 +1,8 @@
 var test = require('tape')
-var Server = require('ssb-server')
 var Client = require('ssb-client')
 var home = require('os-homedir')()
+var Server = require('ssb-server')
+  .use(require('ssb-server/plugins/master'))
 
 var Defaults = require('../defaults')
 var Config = require('../inject')
