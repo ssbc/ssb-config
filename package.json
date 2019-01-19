@@ -8,7 +8,7 @@
     "url": "git://github.com/ssbc/ssb-config.git"
   },
   "scripts": {
-    "test": "tape tests/*.js",
+    "test": "tape tests/*.test.js",
     "test:lite": "SKIP_SERVER=true npm test"
   },
   "dependencies": {
