@@ -8,7 +8,8 @@
     "url": "git://github.com/ssbc/ssb-config.git"
   },
   "scripts": {
-    "test": "tape tests/*.js"
+    "test": "tape tests/*.js",
+    "test:lite": "SKIP_SERVER=true npm test"
   },
   "dependencies": {
     "deep-extend": "^0.6.0",
@@ -16,6 +17,7 @@
     "non-private-ip": "^1.2.1",
     "os-homedir": "^1.0.1",
     "rc": "^1.1.6",
+    "ssb-client": "^4.6.0",
     "ssb-keys": "^7.1.4"
   },
   "devDependencies": {
