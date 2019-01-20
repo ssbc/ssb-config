@@ -5,8 +5,8 @@ var home = require('os-homedir')()
 
 var { fork } = require('child_process');
 
-var configDefault = require('./server-default-config')
-var configCustom = require('./server-custom-config')
+var configDefault = require('./server/default.config.js')
+var configCustom = require('./server/custom.config.js')
 
 if (process.env.SKIP_SERVER) {
   console.log('\n!! skipping server startup tests\n')
@@ -23,7 +23,7 @@ test('Server startup - default config', t => {
   t.equal(configDefault.friends.dunbar, 150, 'e.g. has default dunbar number')
 
 
-  const server = fork(Path.join(__dirname, './server-default.js'))
+  const server = fork(Path.join(__dirname, './server/default.js'))
   // const server = fork(Path.join(__dirname, '../server.js'), { detached: true })
 
   server.on('message', msg => {
@@ -58,7 +58,7 @@ test('Server startup - custom config', t => {
   t.equal(configCustom.connections.incoming.net[0].port, 9999, 'e.g. has default port')
   t.equal(configCustom.friends.dunbar, 1500, 'has new default dunbar number')
 
-  const server = fork(Path.join(__dirname, './server-custom.js'))
+  const server = fork(Path.join(__dirname, './server/custom.js'))
 
   server.on('message', msg => {
     if (msg.action === 'KILLME') server.kill()

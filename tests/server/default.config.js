@@ -1,4 +1,4 @@
-const Defaults = require('../defaults')
+const Defaults = require('../../defaults')
 
 module.exports = Defaults('ssb')
 // NOTE: ideally would use index.js, but on a system with ~/.ssb/config,
