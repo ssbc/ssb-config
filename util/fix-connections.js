@@ -1,6 +1,3 @@
-var getNet = require('./get-net')
-var getWS = require('./get-ws')
-
 // *** BACKSTORY ***
 // there has been an evolution of how connection host:port and ws are set
 // historically you have been able to set host, port net connections,
@@ -13,8 +10,8 @@ var getWS = require('./get-ws')
 //   - writes host,port,ws settings based on the connections.incoming setting
 
 module.exports = function fixConnections (config) {
-  const net = getNet(config)
-  const ws = getWS(config)
+  const net = getTransport(config, 'net', 8008)
+  const ws = getTransport(config, 'ws', 8989)
 
   var errors = []
   if (config.host && net.host) {
@@ -35,3 +32,27 @@ module.exports = function fixConnections (config) {
 
   return config
 }
+
+var get = require('lodash.get')
+
+function getTransport (config, protocolName, defaultPort) {
+  var connection = get(config, 'connections.incoming.'+protocolName, [])
+    .find(function (transport) {
+      return isAccessible(transport)
+    })
+
+  if (!connection) return { host: undefined, port: defaultPort }
+
+  return {
+    host: connection.host,
+    port: connection.port || defaultPort
+  }
+}
+
+function isAccessible (transport) {
+  return transport.scope === 'private' || transport.scope.includes('private') ||
+    transport.scope === 'public' || transport.scope.includes('public')
+}
+
+
+
