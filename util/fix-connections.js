@@ -34,6 +34,8 @@ module.exports = function fixConnections (config) {
   }
   if (errors.length) throw new Error('ssb-config: conflicting connection settings for: ' + errors.join(', '))
 
+  // LEGACY - ensure host and port are set
+  // (but based on new connections config style)
   config.host = net.host || ws.host
   config.port = net.port
   config.ws = ws
