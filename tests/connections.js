@@ -12,14 +12,14 @@ test('setting custom host:port', t => {
   t.equal(host, 'pub.mixmix.io', 'net: sets custom host in connections')
   t.equal(port, 2001, 'net: sets custom port in connections')
 
-  t.equal(config.host, 'pub.mixmix.io', 'net: [LEGCACY] custom config.host is set')
-  t.equal(config.port, 2001, 'net: [LEGCACY] custom config.port is set')
+  t.equal(config.host, 'pub.mixmix.io', 'net: [LEGACY] custom config.host is set')
+  t.equal(config.port, 2001, 'net: [LEGACY] custom config.port is set')
 
   var { host: WSHost, port: WSPort } = config.connections.incoming.ws[0]
   t.equal(WSHost, 'pub.mixmix.io', 'ws: sets custom host in connections')
   t.equal(WSPort, 8989, 'ws: sets default port in connections')
 
-  t.equal(config.ws.port, 8989, 'ws: [LEGCACY] custom config.ws.port is set')
+  t.equal(config.ws.port, 8989, 'ws: [LEGACY] custom config.ws.port is set')
 
   t.end()
 })
@@ -38,14 +38,14 @@ test('setting custom connections.incoming', t => {
   t.equal(host, 'pub.mixmix.io', 'net: sets custom host in connections')
   t.equal(port, 23456, 'net: sets custom port in connections')
 
-  t.equal(config.host, 'pub.mixmix.io', 'net: [LEGCACY] custom config.host is set')
-  t.equal(config.port, 23456, 'net: [LEGCACY] custom config.port is set')
+  t.equal(config.host, 'pub.mixmix.io', 'net: [LEGACY] custom config.host is set')
+  t.equal(config.port, 23456, 'net: [LEGACY] custom config.port is set')
 
   var { host: WSHost, port: WSPort } = config.connections.incoming.ws[0]
   t.equal(WSHost, 'pub.mixmix.io', 'ws: sets custom host in connections')
   t.equal(WSPort, 23457, 'ws: sets default port in connections')
 
-  t.equal(config.ws.port, 23457, 'ws: [LEGCACY] custom config.ws.port is set')
+  t.equal(config.ws.port, 23457, 'ws: [LEGACY] custom config.ws.port is set')
 
   t.end()
 })
@@ -116,7 +116,7 @@ test('setting connections.incoming explicitly with no ws', t => {
   })
 
   t.equal(config.connections.incoming.ws, undefined, 'no ws set in connection.incoming')
-  t.equal(config.ws.port, undefined, 'ws: [LEGCACY] no config.ws.port set')
+  t.equal(config.ws.port, undefined, 'ws: [LEGACY] no config.ws.port set')
   t.equal(config.host, 'pub.mixmix.io', 'host still derived from net setting')
 
   t.end()
@@ -133,7 +133,7 @@ test('incoming net connection has no port configured', t => {
 
   var { port } = config.connections.incoming.net[0]
   t.equal(port, 8008, 'net: sets default port in connections')
-  t.equal(config.port, 8008, 'net: [LEGCACY] default config.port is set')
+  t.equal(config.port, 8008, 'net: [LEGACY] default config.port is set')
 
   t.end()
 })
@@ -149,7 +149,7 @@ test('incoming ws connection has no port configured', t => {
 
   var { port } = config.connections.incoming.ws[0]
   t.equal(port, 8989, 'ws: sets default port in connections')
-  t.equal(config.ws.port, 8989, 'ws: [LEGCACY] default config.ws.port is set')
+  t.equal(config.ws.port, 8989, 'ws: [LEGACY] default config.ws.port is set')
 
   t.end()
 })
