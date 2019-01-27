@@ -4,7 +4,9 @@ var merge = require('deep-extend')
 var nonPrivate = require('non-private-ip')
 var ssbKeys = require('ssb-keys')
 var get = require('lodash.get')
+
 var fixConnections = require('./util/fix-connections')
+var defaultPorts = require('./default-ports')
 
 var SEC = 1e3
 var MIN = 60 * SEC
@@ -58,13 +60,13 @@ module.exports = function setDefaults (name, config) {
     config.connections.incoming = {
       net: [{
         host: config.host || nonPrivate.v4 || '::',
-        port: config.port || 8008,
+        port: config.port || defaultPorts.net,
         scope: ['device', 'local', 'public'],
         transform: 'shs'
       }],
       ws: [{
         host: config.host || nonPrivate.v4 || '::',
-        port: get(config, 'ws.port', 8989),
+        port: get(config, 'ws.port', defaultPorts.ws),
         scope: ['device', 'local', 'public'],
         transform: 'shs'
       }]

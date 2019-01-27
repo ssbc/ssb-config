@@ -6,12 +6,9 @@ module.exports = function getNet (config) {
       return isAccessible(transport)
     })
 
-  if (!connection) return {host: undefined, port: 8989}
+  if (!connection) return
 
-  return {
-    host: connection.host,
-    port: connection.port || 8989
-  }
+  return connection
 }
 
 function isAccessible (transport) {
