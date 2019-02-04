@@ -153,3 +153,24 @@ test('incoming ws connection has no port configured', t => {
 
   t.end()
 })
+
+test('port is set on top level, but not incoming', t => {
+  var config = Config('testnet', {
+    port: 8009,
+    host: 'localhost',
+    connections: {
+      incoming: {
+        net: [{ scope: ['device', 'local'], port: 8009, host: '::'}]
+      }
+    }
+  })
+  console.error(config)
+
+  t.equal(config.port, 8009, 'net: sets default port in connections')
+
+  t.end()
+})
+
+
+
+
