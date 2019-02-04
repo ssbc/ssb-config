@@ -51,8 +51,10 @@ function getTransport (config, protocolName, defaultPort) {
 
 function isAccessible (transport) {
   return transport.scope === 'private' || transport.scope.includes('private') ||
+    transport.scope === 'local' || transport.scope.includes('local') ||
     transport.scope === 'public' || transport.scope.includes('public')
 }
+
 
 
 
