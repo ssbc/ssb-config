@@ -27,7 +27,11 @@ module.exports = function setDefaults (name, config) {
       hops: 3
     },
     gossip: {
-      connections: 3
+      connections: 3,
+      friends: true,
+      seed: true,
+      local: true,
+      global: true
     },
     connections: {
       outgoing: {
