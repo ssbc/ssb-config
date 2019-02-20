@@ -74,7 +74,9 @@ module.exports = function setDefaults (name, config) {
   }
   config = fixConnections(config)
 
-  config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
+  if (!config.keys) {
+    config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
+  }
 
   return config
 }
