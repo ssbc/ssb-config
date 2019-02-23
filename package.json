@@ -17,7 +17,6 @@
     "non-private-ip": "^1.2.1",
     "os-homedir": "^1.0.1",
     "rc": "^1.1.6",
-    "ssb-client": "^4.6.0",
     "ssb-keys": "^7.1.4"
   },
   "devDependencies": {
@@ -27,3 +26,4 @@
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
   "license": "MIT"
 }
+
