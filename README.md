@@ -108,7 +108,7 @@ likewise, `onion` should be in the public scope, because you can connect to it o
   - `local` - alias to private
   - `device` - "localhost". accessable only on the same device.
 - `external` *(array of strings)* ... for use in combination with public scope. this is the external domain given out as the address to peers.
-- `server` .... TODO ??
+- `server` - used for ws plugin to run over TLS. Needs to be an object that gets passed to [pull-ws](https://github.com/pull-stream/pull-ws). Two keys are needed: `key` - the private key and an `address` function that returns an object with a `port` key.
 
 ---
 
