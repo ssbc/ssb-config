@@ -20,6 +20,7 @@
     "ssb-keys": "^7.1.4"
   },
   "devDependencies": {
+    "ssb-client": "^4.7.1",
     "ssb-server": "latest",
     "tape": "^4.9.2"
   },
