@@ -1,12 +1,19 @@
 const test = require('tape')
 const ssbKeys = require('ssb-keys')
 
-var Config = require('../inject')
+const Config = require('../inject')
 
-test('setting custom host:port', t => {
+test('default: no keys set', t => {
+  const config = Config('testnet')
+
+  t.ok(config.keys.public, 'keys exist')
+  t.end()
+})
+
+test('custom: keys injected', t => {
   const keys = ssbKeys.generate()
-  var config = Config('testnet', { keys })
+  const config = Config('testnet', { keys })
 
-  t.equal(keys.public, config.keys.public,  'keys are correctly set')
+  t.equal(keys.public, config.keys.public,  'keys exist')
   t.end()
 })
