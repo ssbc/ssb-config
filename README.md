@@ -66,8 +66,8 @@ Options:
 - `timers.reconnect` _(number)_ TODO
 - `timers.ping` _(number)_ TODO
 - `timers.handshake` _(number)_ TODO
-- `caps.shs` _(string)_ TODO
-- `caps.sign` _(string)_ TODO
+- `caps.shs` _(string)_ Key for accessing the scuttlebutt protocol (see secret-handshake paper for a full explaination)
+- `caps.sign` _(string)_ Used to sign messages
 - `logging.level` _(string)_ How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
 - `master` _(array)_ Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 - `remote` ... TODO ... a multisever address for ... (in the future this may be deprecated / derived from `connections`
