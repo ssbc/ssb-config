@@ -1,4 +1,4 @@
-var get = require('lodash.get')
+var get = require('lodash').get
 
 module.exports = function getNet (config) {
   var connection = get(config, 'connections.incoming.ws', [])

@@ -2,10 +2,31 @@ var test = require('tape')
 var Path = require('path')
 var Client = require('ssb-client')
 var home = require('os-homedir')()
+var process = require('process')
+const _ = require('lodash')
 
 var { fork } = require('child_process');
 
 var configDefault = require('./server/default.config.js')
+
+if (process.env.TRAVIS === 'true') {
+  // https://github.com/lodash/lodash/issues/1244#issuecomment-356676695
+  const mapValuesDeep = (obj, fn) =>
+    _.mapValues(obj, (val, key) =>
+      _.isPlainObject(val)
+      ? mapValuesDeep(val, fn)
+      : fn(val, key, obj)
+    )
+
+  const useIpv4Address = (val, key, obj) => {
+    if (val === '::') {
+      obj[key] = '0.0.0.0'
+    }
+  }
+
+  mapValuesDeep(configDefault, useIpv4Address)
+  mapValuesDeep(configCustom, useIpv4Address)
+}
 var configCustom = require('./server/custom.config.js')
 
 if (process.env.SKIP_SERVER) {

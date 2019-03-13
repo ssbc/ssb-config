@@ -3,7 +3,7 @@ var home = require('os-homedir')
 var merge = require('deep-extend')
 var nonPrivate = require('non-private-ip')
 var ssbKeys = require('ssb-keys')
-var get = require('lodash.get')
+var get = require('lodash').get
 
 var fixConnections = require('./util/fix-connections')
 var defaultPorts = require('./default-ports')
