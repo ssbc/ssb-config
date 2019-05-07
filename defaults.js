@@ -1,5 +1,5 @@
 var path = require('path')
-var home = require('os-homedir')
+const { homedir } = require('os')
 var merge = require('deep-extend')
 var ssbKeys = require('ssb-keys')
 var get = require('lodash.get')
@@ -12,7 +12,7 @@ var MIN = 60 * SEC
 
 module.exports = function setDefaults (name, config) {
   var baseDefaults = {
-    path: path.join(home() || 'browser', '.' + name),
+    path: path.join(homedir() || 'browser', '.' + name),
     party: true,
     timeout: 0,
     pub: true,

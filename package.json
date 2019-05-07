@@ -14,7 +14,6 @@
   "dependencies": {
     "deep-extend": "^0.6.0",
     "lodash.get": "^4.4.2",
-    "os-homedir": "^1.0.1",
     "rc": "^1.1.6",
     "ssb-keys": "^7.1.4"
   },

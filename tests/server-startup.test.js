@@ -1,12 +1,13 @@
 var test = require('tape')
 var Path = require('path')
 var Client = require('ssb-client')
-var home = require('os-homedir')()
-
+const { homedir } = require('os')
 var { fork } = require('child_process');
 
 var configDefault = require('./server/default.config.js')
 var configCustom = require('./server/custom.config.js')
+
+const home = homedir()
 
 if (process.env.SKIP_SERVER) {
   console.log('\n!! skipping server startup tests\n')
