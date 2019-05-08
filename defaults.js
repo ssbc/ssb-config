@@ -117,12 +117,15 @@ module.exports = function setDefaults (name, config) {
       config.connections.incoming = Object.keys(defaultPorts).map((service) => {
         return {
           service,
-          interfaces: Object.values(interfaces).flat().filter(item => {
+          interfaces: Object.values(interfaces).reduce((acc, val) => acc.concat(val)).filter(item => {
             // We want to avoid scoped IPv6 addresses since they don't seem to
             // play nicely with the Node.js networking stack. These addresses
             // often start with `fe80` and throw EINVAL when we try to bind to
             // them. 
             return item.scopeid == null || item.scopeid === 0
+          }).filter(item => {
+            // We *also* want to just completely avoid IPv6 when on Travis.
+            return process.env.TRAVIS == null || item.family === 'IPv4'
           }).map(item => {
             // This bit is simple because the ssb-config options for `incoming`
             // can either be hardcoded or directly inferred from `interfaces`.
