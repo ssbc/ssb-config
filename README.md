@@ -80,7 +80,8 @@ Defaults to the following:
     "net": [{ "port": 8008, "scope": "public", "transform": "shs" }]
   },
   "outgoing": {
-    "net": [{ "transform": "shs" }]
+    "net": [{ "transform": "shs" }],
+    "onion": [{ "transform": "shs" }]
   }
 }
 ```
