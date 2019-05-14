@@ -1,7 +1,7 @@
 {
   "name": "ssb-config",
   "description": "load ssb config",
-  "version": "3.2.5",
+  "version": "3.3.0",
   "homepage": "https://github.com/ssbc/ssb-config",
   "repository": {
     "type": "git",
