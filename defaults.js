@@ -31,7 +31,8 @@ module.exports = function setDefaults (name, config) {
     },
     connections: {
       outgoing: {
-        net: [{ transform: 'shs' }]
+        net: [{ transform: 'shs' }],
+        onion: [{ transform: 'shs' }]
       }
     },
     timers: {
