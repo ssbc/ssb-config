@@ -10,7 +10,8 @@ var configCustom = require('./server/custom.config.js')
 
 if (process.env.SKIP_SERVER) {
   console.log('\n!! skipping server startup tests\n')
-  return 
+  // HACK: this skips the tests as an alternative to a global `return`
+  test = function () {}
 }
 
 test('Server startup - default config', t => {
