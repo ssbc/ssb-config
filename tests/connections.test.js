@@ -160,17 +160,13 @@ test('port is set on top level, but not incoming', t => {
     host: 'localhost',
     connections: {
       incoming: {
-        net: [{ scope: ['device', 'local'], port: 8009, host: '::'}]
+        net: [{ scope: ['device', 'local'], host: 'localhost' }]
       }
     }
   })
-  console.error(config)
+  console.log(config.connections.incoming)
 
   t.equal(config.port, 8009, 'net: sets default port in connections')
 
   t.end()
 })
-
-
-
-

@@ -18,8 +18,8 @@ module.exports = function fixConnections (config) {
   const ws = getWS(config) || {}
 
   // Add default ports
-  if (net.host && !net.port) net.port = defaultPorts.net
-  if (ws.host && !ws.port) ws.port = defaultPorts.ws
+  if (net.host && !net.port) net.port = config.port || defaultPorts.net
+  if (ws.host && !ws.port) ws.port = config.port || defaultPorts.ws
 
   // [LEGACY] ensure host:port + ws are set
   var errors = []
@@ -32,7 +32,11 @@ module.exports = function fixConnections (config) {
   if (config.ws && config.ws.port && ws.port) {
     if (config.ws.port !== ws.port) errors.push('ws port')
   }
-  if (errors.length) throw new Error('ssb-config: conflicting connection settings for: ' + errors.join(', '))
+
+  if (errors.length) {
+    const message = 'ssb-config: conflicting connection settings for: ' + errors.join(', ')
+    throw new Error(message)
+  }
 
   // LEGACY - ensure host and port are set
   // (but based on new connections config style)

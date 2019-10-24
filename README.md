@@ -104,9 +104,8 @@ Each transport can have an array of different configurations passed to it, these
   applies directly to tcp based transports (net, ws) but for other transports (unix, tor) is still important,
 because `getAddress('device')` should return a `unix`  transport (if configured) because you can only connect to unix sockets if you have fs access,
 likewise, `onion` should be in the public scope, because you can connect to it over the internet.
-  - `private` - bind only to _local network_ i.e. wifi/lan
+  - `local` - bind only to _local network_ i.e. wifi/lan (alias: `private`)
   - `public` - bind to public ip address (it's likely you do not have a public address on an end device, but some networks do)
-  - `local` - alias to private
   - `device` - "localhost". accessable only on the same device.
 - `external` *(array of strings)* ... for use in combination with public scope. this is the external domain given out as the address to peers.
 - `key` - used together with `cert` for ws plugin to run over TLS (wss). Needs to be a path to where the key is stored.

@@ -12,6 +12,13 @@ module.exports = function getNet (config) {
 }
 
 function isAccessible (transport) {
-  return transport.scope === 'private' || transport.scope.includes('private') ||
-    transport.scope === 'public' || transport.scope.includes('public')
+  const scopes = [
+    'public', // internet
+    'local', // local wifi
+    'private' // (alias of local)
+  ]
+
+  return scopes.some(s => {
+    return transport.scope === s || transport.scope.includes(s)
+  })
 }
