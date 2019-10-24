@@ -1,23 +1,17 @@
 var path = require('path')
 var home = require('os-homedir')
 var merge = require('deep-extend')
-var nonPrivate = require('non-private-ip')
 var ssbCaps = require('ssb-caps')
 var ssbKeys = require('ssb-keys')
-var get = require('lodash.get')
 
+var incomingConnections = require('./util/incoming-connections')
 var fixConnections = require('./util/fix-connections')
-var defaultPorts = require('./default-ports')
 
 var SEC = 1e3
 var MIN = 60 * SEC
 
 module.exports = function setDefaults (name, config) {
   var baseDefaults = {
-    // just use an ipv4 address by default.
-    // there have been some reports of seemingly non-private
-    // ipv6 addresses being returned and not working.
-    // https://github.com/ssbc/scuttlebot/pull/102
     path: path.join(home() || 'browser', '.' + name),
     party: true,
     timeout: 0,
@@ -50,21 +44,11 @@ module.exports = function setDefaults (name, config) {
   config = merge(baseDefaults, config || {})
 
   if (!config.connections.incoming) {
-    config.connections.incoming = {
-      net: [{
-        host: config.host || nonPrivate.v4 || nonPrivate.private.v4 || '::',
-        port: config.port || defaultPorts.net,
-        scope: ['device', 'local', 'public'],
-        transform: 'shs'
-      }],
-      ws: [{
-        host: config.host || nonPrivate.v4 || nonPrivate.private.v4 || '::',
-        port: get(config, 'ws.port', defaultPorts.ws),
-        scope: ['device', 'local', 'public'],
-        transform: 'shs'
-      }]
-    }
+    // if no incoming connections have been set,
+    // populate this with some rad-comprehensive defaults!
+    config.connections.incoming = incomingConnections(config)
   }
+
   config = fixConnections(config)
 
   if (config.keys == null) {
