@@ -3,7 +3,7 @@ var Path = require('path')
 var Client = require('ssb-client')
 var home = require('os-homedir')()
 
-var { fork } = require('child_process');
+var { fork } = require('child_process')
 
 var configDefault = require('./server/default.config.js')
 var configCustom = require('./server/custom.config.js')
@@ -23,7 +23,6 @@ test('Server startup - default config', t => {
   t.equal(configDefault.connections.incoming.net[0].port, 8008, 'e.g. has default port')
   t.equal(configDefault.friends.dunbar, 150, 'e.g. has default dunbar number')
 
-
   const server = fork(Path.join(__dirname, './server/default.js'))
   // const server = fork(Path.join(__dirname, '../server.js'), { detached: true })
 
@@ -32,16 +31,17 @@ test('Server startup - default config', t => {
 
     if (msg.action === 'READY') {
       Client(configDefault.keys, configDefault, (err, ssb) => {
-        if (err) { 
+        if (err) {
           console.log(err)
-          
+
           server.send({ action: 'CLOSE' })
           server.kill()
         }
 
         t.false(err, 'remote connection to server works')
 
-        ssb.whoami((err, feed) => {
+        ssb.whoami((_, feed) => {
+          if (err) throw err
           t.true(feed.id.startsWith('@'), 'remote query works')
 
           ssb.close(() => {
@@ -66,9 +66,9 @@ test('Server startup - custom config', t => {
 
     if (msg.action === 'READY') {
       Client(configCustom.keys, configCustom, (err, ssb) => {
-        if (err) { 
+        if (err) {
           console.log(err)
-          
+
           server.send({ action: 'CLOSE' })
           server.kill()
         }
@@ -76,6 +76,7 @@ test('Server startup - custom config', t => {
         t.false(err, 'remote connection to server works')
 
         ssb.whoami((err, feed) => {
+          if (err) throw err
           t.true(feed.id.startsWith('@'), 'remote query works')
 
           ssb.close(() => {

@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "ssb-client": "^4.7.1",
-    "ssb-server": "^14.1.12",
+    "ssb-master": "^1.0.3",
+    "ssb-server": "^15.1.2",
     "tape": "^4.9.2"
   },
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",

@@ -3,7 +3,7 @@ const Path = require('path')
 
 module.exports = function TestServer (config) {
   const Server = require('ssb-server')
-    .use(require('ssb-server/plugins/master'))
+    .use(require('ssb-master'))
 
   const server = Server(config)
   writeManifest(server)
