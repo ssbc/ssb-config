@@ -73,7 +73,7 @@ module.exports = function (config) {
         interfaces: Object.values(interfaces).reduce((acc, val) => {
           // Future TODO: replace with shiny new `Array.prototype.flat()`.
           return acc.concat(val)
-        }).filter(item => {
+        }, []).filter(item => {
           // We want to avoid scoped IPv6 addresses since they don't seem to
           // play nicely with the Node.js networking stack. These addresses
           // often start with `fe80` and throw EINVAL when we try to bind to
