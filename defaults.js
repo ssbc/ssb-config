@@ -52,13 +52,13 @@ module.exports = function setDefaults (name, config) {
   if (!config.connections.incoming) {
     config.connections.incoming = {
       net: [{
-        host: config.host || nonPrivate.v4 || '::',
+        host: config.host || nonPrivate.v4 || nonPrivate.private.v4 || '::',
         port: config.port || defaultPorts.net,
         scope: ['device', 'local', 'public'],
         transform: 'shs'
       }],
       ws: [{
-        host: config.host || nonPrivate.v4 || '::',
+        host: config.host || nonPrivate.v4 || nonPrivate.private.v4 || '::',
         port: get(config, 'ws.port', defaultPorts.ws),
         scope: ['device', 'local', 'public'],
         transform: 'shs'
