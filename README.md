@@ -57,7 +57,7 @@ Options:
 * `local` *(boolean)* Replicate with local servers found on the same network via `udp`. Defaults to `true`.
 * `friends.dunbar` *(number)* [`Dunbar's number`](https://en.wikipedia.org/wiki/Dunbar%27s_number). Number of nodes your instance will replicate. Defaults to `150`.
 * `friends.hops` *(number)* How many friend of friend hops to replicate. Defaults to `3`.
-* `gossip.connections` *(number)* How many other nodes to connect with at one time. Defaults to `2`.
+* `gossip.connections` *(number)* How many other nodes to connect with at one time. Defaults to `3`.
 * `path` *(string)* Path to the application data folder, which contains the private key, message attachment data (blobs) and the leveldb backend. Defaults to `$HOME/.ssb`.
 * `master` *(array)* Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 * `logging.level` *(string)* How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
@@ -80,7 +80,8 @@ Defaults to the following:
     "net": [{ "port": 8008, "scope": "public", "transform": "shs" }]
   },
   "outgoing": {
-    "net": [{ "transform": "shs" }]
+    "net": [{ "transform": "shs" }],
+    "onion": [{ "transform": "shs" }]
   }
 }
 ```
@@ -108,7 +109,8 @@ likewise, `onion` should be in the public scope, because you can connect to it o
   - `local` - alias to private
   - `device` - "localhost". accessable only on the same device.
 - `external` *(array of strings)* ... for use in combination with public scope. this is the external domain given out as the address to peers.
-- `server` .... TODO ??
+- `key` - used together with `cert` for ws plugin to run over TLS (wss). Needs to be a path to where the key is stored.
+- `cert` - used together with `key` for ws plugin to run over TLS (wss). Needs to be a path to where the certificate is stored.
 
 ---
 

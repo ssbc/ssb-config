@@ -1,7 +1,7 @@
 {
   "name": "ssb-config",
   "description": "load ssb config",
-  "version": "3.2.3",
+  "version": "3.4.0",
   "homepage": "https://github.com/ssbc/ssb-config",
   "repository": {
     "type": "git",
@@ -14,14 +14,15 @@
   "dependencies": {
     "deep-extend": "^0.6.0",
     "lodash.get": "^4.4.2",
-    "non-private-ip": "^1.2.1",
     "os-homedir": "^1.0.1",
     "rc": "^1.1.6",
-    "ssb-client": "^4.6.0",
+    "ssb-caps": "^1.0.1",
     "ssb-keys": "^7.1.4"
   },
   "devDependencies": {
-    "ssb-server": "latest",
+    "ssb-client": "^4.7.1",
+    "ssb-master": "^1.0.3",
+    "ssb-server": "^15.1.2",
     "tape": "^4.9.2"
   },
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
