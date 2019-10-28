@@ -113,6 +113,20 @@ likewise, `onion` should be in the public scope, because you can connect to it o
 
 ---
 
+#### scopes
+
+An address scope is the area from which it's possible to connect to an address.
+* `device` means connections can only come from the same device. (talking to your self)
+* `local` means connections can only come from the same network, i.e. same wifi.
+* `public` means connections can come from anywhere on the internet.
+
+Some protocols only work in particular scopes. `unix` socket requires fs access,
+so it only works for the device scope. `onion` (tor) routes connections through a distributed network,
+so it only works if you are fully connected to the `public` internet. Some mesh networks
+are really large, so they might seem public. Some overlay networks, such as cjdns and
+ZeroTeirOne create a fake local network that is publically accessable (these should
+be manually configured as public addresses!)
+
 ### Example `connnections` configurations
 
 If you only want to use [Tor](https://torproject.org) to create outgoing connections you can specify your `outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
