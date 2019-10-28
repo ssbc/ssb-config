@@ -127,6 +127,9 @@ are really large, so they might seem public. Some overlay networks, such as cjdn
 ZeroTeirOne create a fake local network that is publically accessable (these should
 be manually configured as public addresses!)
 
+most ssb peers just have a local and device scopes. pubs require a public scope.
+`ssb-tunnel` allows any peer to have a public address, by routing connections through a friendly pub.
+
 ### Example `connnections` configurations
 
 If you only want to use [Tor](https://torproject.org) to create outgoing connections you can specify your `outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
