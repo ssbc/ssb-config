@@ -61,6 +61,13 @@ Options:
 * `path` *(string)* Path to the application data folder, which contains the private key, message attachment data (blobs) and the leveldb backend. Defaults to `$HOME/.ssb`.
 * `master` *(array)* Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 * `logging.level` *(string)* How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
+* `party` _(boolean)_ TODO
+* `timers.connection` _(number)_ TODO
+* `timers.reconnect` _(number)_ TODO
+* `timers.ping` _(number)_ TODO
+* `timers.handshake` _(number)_ TODO
+* `caps.shs` _(string)_ Key for accessing the scuttlebutt protocol (see secret-handshake paper for a full explaination)
+* `caps.sign` _(string)_ Used to sign messages
 
 Deprecated Options:
 * `host` *(string)* The domain or ip address for `sbot`. Defaults to your public ip address.
@@ -100,13 +107,8 @@ Each transport can have an array of different configurations passed to it, these
   - `noauth` - no encryption, any connection via `noauth` is considered authorized. **use only with `device` scope or unix socket**
 - `port` *(integer)*
 - `host` *(string)* only relevant for ... TODO
-- `scope` *(string|array(string))* scope determins the set of network interfaces to bind the server to, and getAddress(scope) returns the relavant addresses. If scope is an array, then the server will bind to all the selected ports. default is `["device", "local", "public"]`.
-  applies directly to tcp based transports (net, ws) but for other transports (unix, tor) is still important,
-because `getAddress('device')` should return a `unix`  transport (if configured) because you can only connect to unix sockets if you have fs access,
-likewise, `onion` should be in the public scope, because you can connect to it over the internet.
-  - `local` - bind only to _local network_ i.e. wifi/lan (alias: `private`)
-  - `public` - bind to public ip address (it's likely you do not have a public address on an end device, but some networks do)
-  - `device` - "localhost". accessable only on the same device.
+- `scope` *(string|array(string))* scope determines the set of network interfaces to bind the server to. If scope is an array, then the server will bind to all the selected ports. See more about scopes below.
+
 - `external` *(array of strings)* ... for use in combination with public scope. this is the external domain given out as the address to peers.
 - `key` - used together with `cert` for ws plugin to run over TLS (wss). Needs to be a path to where the key is stored.
 - `cert` - used together with `key` for ws plugin to run over TLS (wss). Needs to be a path to where the certificate is stored.
@@ -116,7 +118,7 @@ likewise, `onion` should be in the public scope, because you can connect to it o
 #### scopes
 
 An address scope is the area from which it's possible to connect to an address.
-* `device` means connections can only come from the same device. (talking to your self)
+* `device` means connections can only come from the same device. (talking to your self). _alias `private`_
 * `local` means connections can only come from the same network, i.e. same wifi.
 * `public` means connections can come from anywhere on the internet.
 
@@ -129,6 +131,8 @@ be manually configured as public addresses!)
 
 most ssb peers just have a local and device scopes. pubs require a public scope.
 `ssb-tunnel` allows any peer to have a public address, by routing connections through a friendly pub.
+
+Addresses for scopes are provides `secret-stack`s `getAddress(scope)` method, which in turn calls `multiserver`s `stringify(scope)` method.
 
 ### Example `connnections` configurations
 
