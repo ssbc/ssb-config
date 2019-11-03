@@ -1,6 +1,7 @@
 const get = require('lodash.get')
 const os = require('os')
 const defaultPorts = require('../default-ports')
+const ip = require('ip')
 
 // generates all possible incoming connection settings that you could bind to
 module.exports = function (config) {
@@ -24,15 +25,12 @@ module.exports = function (config) {
     return defaultPort
   }
 
-  // We only use two scopes by default:
-  //
-  // - internal: inaccessible over the network
-  // - external: accessible over the network
-  //
-  const scope = {
-    internal: ['device'],
-    external: ['device', 'local', 'public']
-  }
+
+  //legacy configuration didn't have a scopes concept,
+  //so interpret that as every scope at once.
+  //I think there is probably a better way to do this,
+  //but am fairly sure this will probably work.
+  const allScopes = ['device', 'local', 'public']
 
   // If `config.host` is defined then we don't need to enumerate interfaces.
   if (config.host) {
@@ -40,13 +38,13 @@ module.exports = function (config) {
       net: [{
         host: config.host,
         port: getPort('net'),
-        scope: scope.external,
+        scope: allScopes,
         transform: 'shs'
       }],
       ws: [{
         host: config.host,
         port: getPort('ws'),
-        scope: scope.external,
+        scope: allScopes,
         transform: 'shs'
       }]
     }
@@ -82,10 +80,20 @@ module.exports = function (config) {
         }).map(item => {
           // This bit is simple because the ssb-config options for `incoming`
           // can either be hardcoded or directly inferred from `interfaces`.
+
+          //if an interface is internal, it can only be accessed from the device.
+          //if it's got a private ip address it can only be accessed from some network.
+          //otherwise, it's presumably a publically accessable address.
+          var scope = (
+            item.internal ? 'device'
+            : ip.isPrivate(item.address) ? 'local'
+            : 'public'
+          )
+
           return {
             host: item.address,
             port: getPort(service),
-            scope: item.internal ? scope.internal : scope.external,
+            scope: [scope],
             transform: 'shs'
           }
         })
