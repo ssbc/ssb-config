@@ -23,19 +23,18 @@ test('Server startup - default config', t => {
   t.equal(configDefault.connections.incoming.net[0].port, 8008, 'e.g. has default port')
   t.equal(configDefault.friends.dunbar, 150, 'e.g. has default dunbar number')
 
-  const server = fork(Path.join(__dirname, './server/default.js'))
-  // const server = fork(Path.join(__dirname, '../server.js'), { detached: true })
+  const child = fork(Path.join(__dirname, './server/default.js'))
+  // const child = fork(Path.join(__dirname, '../server.js'), { detached: true })
 
-  server.on('message', msg => {
-    if (msg.action === 'KILLME') server.kill()
-
+  child.on('message', msg => {
+    if (msg.action === 'KILLME') child.kill()
     if (msg.action === 'READY') {
       Client(configDefault.keys, configDefault, (err, ssb) => {
         if (err) {
           console.log(err)
 
-          server.send({ action: 'CLOSE' })
-          server.kill()
+          child.send({ action: 'CLOSE' })
+          child.kill()
         }
 
         t.false(err, 'remote connection to server works')
@@ -45,13 +44,15 @@ test('Server startup - default config', t => {
           t.true(feed.id.startsWith('@'), 'remote query works')
 
           ssb.close(() => {
-            server.send({ action: 'CLOSE' })
+            child.send({ action: 'CLOSE' })
             t.end()
           })
         })
       })
     }
   })
+
+  child.send({ action: 'READY' })
 })
 
 test('Server startup - custom config', t => {
