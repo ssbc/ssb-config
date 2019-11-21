@@ -43,7 +43,7 @@ returns you the stock standard config for starting an `ssb-server`
 
 A function which takes:
 - `appName` *(string)* which declares where to look for further config, where to read and write databases. Stores data in `~/.${appName}`, defaults to `ssb` (so data in `~/.ssb`).
-- `opts` *(object)* an object which is fed into the config generation as a bunch of defaults (see 'Configuration' below)
+- `opts` *(object)* an object which can override config defaults (see 'Configuration' below)
 
 ## Configuration
 
@@ -59,7 +59,7 @@ Options:
 * `friends.hops` *(number)* How many friend of friend hops to replicate. Defaults to `3`.
 * `gossip` *(object)* controls what sort of connections are made (see below)
 * `path` *(string)* Path to the application data folder, which contains the private key, message attachment data (blobs) and the leveldb backend. Defaults to `$HOME/.ssb`.
-* `master` *(array)* Pubkeys of users who, if they connect to the Scuttlebot instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
+* `master` *(array)* Pubkeys of users who, if they connect to the [ssb-server](https://github.com/ssbc/ssb-server) instance, are allowed to command the primary user with full rights. Useful for remotely operating a pub. Defaults to `[]`.
 * `logging.level` *(string)* How verbose should the logging be. Possible values are error, warning, notice, and info. Defaults to `notice`.
 * `party` _(boolean)_ TODO
 * `timers.connection` _(number)_ TODO
@@ -70,8 +70,8 @@ Options:
 * `caps.sign` _(string)_ Used to sign messages
 
 Deprecated Options:
-* `host` *(string)* The domain or ip address for `sbot`. Defaults to your public ip address.
-* `port` *(string|number)* The port for `sbot`. Defaults to `8008`.
+* `host` *(string)* The domain or ip address for [ssb-server](https://github.com/ssbc/ssb-server). Defaults to your public ip address.
+* `port` *(string|number)* The port for [ssb-server](https://github.com/ssbc/ssb-server). Defaults to `8008`.
 * `ws` TODO
 
 You should use `connections` to more explicitly configure connections.
@@ -122,11 +122,11 @@ An address scope is the area from which it's possible to connect to an address.
 * `local` means connections can only come from the same network, i.e. same wifi.
 * `public` means connections can come from anywhere on the internet.
 
-Some protocols only work in particular scopes. `unix` socket requires fs access,
+Some protocols only work in particular scopes. `unix` socket requires file system access,
 so it only works for the device scope. `onion` (tor) routes connections through a distributed network,
 so it only works if you are fully connected to the `public` internet. Some mesh networks
-are really large, so they might seem public. Some overlay networks, such as cjdns and
-ZeroTeirOne create a fake local network that is publically accessable (these should
+are really large, so they might seem public. Some overlay networks, such as [cjdns](https://github.com/cjdelisle/cjdns/) and
+[ZeroTier](https://www.zerotier.com/) create a fake local network that is publically accessible (these should
 be manually configured as public addresses!)
 
 most ssb peers just have a local and device scopes. pubs require a public scope.
@@ -149,7 +149,7 @@ If you only want to use [Tor](https://torproject.org) to create outgoing connect
 }
 ```
 
-If you want to run a peer behind NAT or other kind of proxy but still want sbot to be able to create invites for the outside addres, you can specify a `public` scope as your `incoming.net` by defining the `external` parameter like this:
+If you want to run a peer behind NAT or other kind of proxy but still want [ssb-server](https://github.com/ssbc/ssb-server) to be able to create invites for the outside address, you can specify a `public` scope as your `incoming.net` by defining the `external` parameter like this:
 
 ```json
 { 
@@ -167,7 +167,7 @@ If you want to run a peer behind NAT or other kind of proxy but still want sbot 
 
 One thing to notice is that you _need_ `incoming` connections for Apps (like patchwork or git-ssb) to function. By default they use the same authentication mechanism (shs) to grant access to the database, choosing access levels depending on the keypair that opens the connection. If you connect to yourself, you get full access (query and publish). If a remote peer connects, it can only replicate. So be sure to have **at least one** `incoming` connection.
 
-That being said, the overhead of encryption for local applications can be very high, especially on low-powered devices. For this use-case there is a `noauth` transform which by-passes the authentication and grants full access to anybody that can connect to it. **hint:** *This is risky! it might expose private messages or enables people to publish as you!* Therefore be sure to bind the listener to `localhost` or use the `unix` socket. The `unix` file socket is creted as `$HOME/.ssb/socket` by default and has permissions such that only the user running `sbot server` can open it, just like the `.ssb/secret` file.
+That being said, the overhead of encryption for local applications can be very high, especially on low-powered devices. For this use-case there is a `noauth` transform which by-passes the authentication and grants full access to anybody that can connect to it. **hint:** *This is risky! it might expose private messages or enables people to publish as you!* Therefore be sure to bind the listener to `localhost` or use the `unix` socket. The `unix` file socket is created as `$HOME/.ssb/socket` by default and has permissions such that only the user running `ssb-server start` can open it, just like the `$HOME/.ssb/secret` file.
 
 ```json
 { 
@@ -181,7 +181,7 @@ That being said, the overhead of encryption for local applications can be very h
 }
 ```
 
-The local plugin inside scuttlebot will use the first incoming connection of either public or private scope. 
+The local plugin inside [ssb-server](https://github.com/ssbc/ssb-server) will use the first incoming connection of either public or private scope. 
 
 ## `gossip`
 
