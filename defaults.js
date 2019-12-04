@@ -19,7 +19,7 @@ module.exports = function setDefaults (name, config) {
     local: true,
     friends: {
       dunbar: 150,
-      hops: 3
+      hops: 2
     },
     gossip: {
       connections: 3
