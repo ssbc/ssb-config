@@ -3,9 +3,10 @@ var home = require('os-homedir')
 var merge = require('deep-extend')
 var ssbCaps = require('ssb-caps')
 var ssbKeys = require('ssb-keys')
+const get = require('lodash.get')
 
-var incomingConnections = require('./util/incoming-connections')
 var fixConnections = require('./util/fix-connections')
+const defaultPorts = require('./default-ports')
 
 var SEC = 1e3
 var MIN = 60 * SEC
@@ -46,7 +47,20 @@ module.exports = function setDefaults (name, config) {
   if (!config.connections.incoming) {
     // if no incoming connections have been set,
     // populate this with some rad-comprehensive defaults!
-    config.connections.incoming = incomingConnections(config)
+    config.connections.incoming = {
+      net: [{
+	host: config.host || '::',
+	port: config.port || defaultPorts.net,
+	scope: ['device', 'local', 'public'],
+	transform: 'shs'
+      }],
+      ws: [{
+	host: config.host || '::',
+	port: get(config, 'ws.port', defaultPorts.ws),
+	scope: ['device', 'local', 'public'],
+	transform: 'shs'
+      }]
+    }
   }
 
   config = fixConnections(config)
