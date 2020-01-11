@@ -9,15 +9,13 @@
   },
   "scripts": {
     "test": "tape tests/*.test.js | tap-spec",
-    "test:lite": "SKIP_SERVER=true npm test",
-    "postinstall": "patch-package"
+    "test:lite": "SKIP_SERVER=true npm test"
   },
   "dependencies": {
     "deep-extend": "^0.6.0",
     "ip": "^1.1.5",
     "lodash.get": "^4.4.2",
     "os-homedir": "^1.0.1",
-    "patch-package": "^6.2.0",
     "rc": "^1.1.6",
     "ssb-caps": "^1.0.1",
     "ssb-keys": "^7.1.4"
