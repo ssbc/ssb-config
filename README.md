@@ -56,7 +56,7 @@ All configuration is loaded via `rc`. This means the final config is a result of
 
 __Options__
 * `connections` *(object)* Details `incoming` and `outgoing` connections behaviour ([See below](#connections)).
-* `remote` *(string)* Multiserver address to connect as a client. Useful in some cases, such as using [ssb-unix-socket](https://github.com/ssbc/ssb-unix-socket) + [ssb-no-auth](https://github.com/ssbc/ssb-no-auth). In the future this may be deprecated / derived from `connections`.
+* `remote` *(string)* [Multiserver address](https://github.com/ssbc/multiserver#address-format) to connect as a client. Useful in some cases, such as using [ssb-unix-socket](https://github.com/ssbc/ssb-unix-socket) + [ssb-no-auth](https://github.com/ssbc/ssb-no-auth). In the future this may be deprecated / derived from `connections`.
 * `timeout`: *(number)* Number of milliseconds a replication stream can idle before it's automatically disconnected. Defaults to `30000`.
 * `pub` *(boolean)* Replicate with pub servers. Defaults to `true`.
 * `local` *(boolean)* Replicate with local servers found on the same network via `udp`. Defaults to `true`.
