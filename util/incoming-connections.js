@@ -106,5 +106,7 @@ module.exports = function (config) {
     }, {})
   }
 
+  incoming.unix = [{ "scope":"device", "transform":"noauth" }]
+
   return incoming
 }
