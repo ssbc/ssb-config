@@ -23,7 +23,7 @@ server.whoami((err, feed) => {
 })
 ```
 If you want to change the default values you can use inject to overwrite them, without having to specify 
-all the settings. For example you can setu up a test network that doesn't collide with the main ssb network:
+all the settings. For example you can setup a test network that doesn't collide with the main ssb network:
 
 ```js
 var Server = require('ssb-server')
@@ -43,7 +43,7 @@ server.whoami((err, feed) => {
 
 ### `require('ssb-config')`
 
-Returns you the stock stanard config for starting an __ssb-server__.
+Returns you the stock standard config for starting an __ssb-server__.
 
 ### `require('ssb-config/inject')(appName, opts) => Object`
 
@@ -82,8 +82,8 @@ and info. Defaults to `notice`.
 * `party.out` _(string)_ Where to put standard output of sbot. may be a path (absolute, or relative to ssb's 
 directory), or false to discard, or true to pass through to the controlling terminal. Defaults to true.
 * `party.err`_(string)_ Where to put standard error of sbot. Defaults to same as config.party.out.
-> * `timers.connection` _(number)_ TODO
-> * `timers.reconnect` _(number)_ TODO
+* `timers.connection` _(number)_ TODO
+* `timers.reconnect` _(number)_ TODO
 * `timers.inactivity` _(number)_  Timeout (ms) before dropping the connection with an inactive pair. 
 Defaults to 5 seconds.
 * `timers.ping` _(number)_ Timeout (ms) used to consider a peer valid when pinging. Defaults to 5 minutes.
