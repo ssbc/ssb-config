@@ -21,9 +21,10 @@
     "ssb-keys": "^7.1.4"
   },
   "devDependencies": {
+    "scuttle-testbot": "^1.2.3",
     "ssb-client": "^4.7.1",
     "ssb-master": "^1.0.3",
-    "ssb-server": "^15.1.2",
+    "ssb-server": "^16.0.1",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.2"
   },

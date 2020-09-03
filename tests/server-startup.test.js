@@ -1,11 +1,10 @@
 var test = require('tape')
-var Path = require('path')
-var Client = require('ssb-client')
-var home = require('os-homedir')()
+const { join } = require('path')
+const Client = require('ssb-client')
+const home = require('os-homedir')()
 
 var { fork } = require('child_process')
 
-var configDefault = require('./server/default.config.js')
 var configCustom = require('./server/custom.config.js')
 
 if (process.env.SKIP_SERVER) {
@@ -14,59 +13,14 @@ if (process.env.SKIP_SERVER) {
   test = function () {}
 }
 
-test('Server startup - default config', t => {
-  // NOTE: ideally would use index.js, but maybe on a system with ~/.ssb/config,
-  // this simulates a clean setup by side-stepping RC
-
-  // check a few basic config thangs
-  t.equal(configDefault.path, `${home}/.ssb`, 'has default ~/.ssb folder')
-  t.equal(configDefault.connections.incoming.net[0].port, 8008, 'e.g. has default port')
-  t.equal(configDefault.friends.dunbar, 150, 'e.g. has default dunbar number')
-
-  const child = fork(Path.join(__dirname, './server/default.js'))
-  // const child = fork(Path.join(__dirname, '../server.js'), { detached: true })
-
-  child.on('message', msg => {
-    if (msg.action === 'KILLME') child.kill()
-    if (msg.action === 'READY') {
-      Client(configDefault.keys, configDefault, (err, ssb) => {
-        if (err) {
-          console.log(err)
-
-          child.send({ action: 'CLOSE' })
-          child.kill()
-        }
-
-        t.false(err, 'remote connection to server works')
-
-        ssb.whoami((_, feed) => {
-          if (err) throw err
-          t.true(feed.id.startsWith('@'), 'remote query works')
-
-          ssb.close(() => {
-            child.send({ action: 'CLOSE' })
-            t.end()
-          })
-        })
-      })
-    }
-  })
-
-  child.send({ action: 'READY' })
-})
-
-test('Server startup - custom config', t => {
-  t.equal(configCustom.path, `${home}/.testnet`, 'adjusts path to match appname')
-  t.equal(configCustom.connections.incoming.net[0].port, 9999, 'e.g. has default port')
-  t.equal(configCustom.friends.dunbar, 1500, 'has new default dunbar number')
-
-  const server = fork(Path.join(__dirname, './server/custom.js'))
+function checkStartUp ({ t, processPath, config }) {
+  const server = fork(join(__dirname, 'server', processPath))
+  // const server = fork(Path.join(__dirname, '../server.js'), { detached: true })
 
   server.on('message', msg => {
     if (msg.action === 'KILLME') server.kill()
-
     if (msg.action === 'READY') {
-      Client(configCustom.keys, configCustom, (err, ssb) => {
+      Client(config.keys, config, (err, ssb) => {
         if (err) {
           console.log(err)
 
@@ -76,7 +30,7 @@ test('Server startup - custom config', t => {
 
         t.false(err, 'remote connection to server works')
 
-        ssb.whoami((err, feed) => {
+        ssb.whoami((_, feed) => {
           if (err) throw err
           t.true(feed.id.startsWith('@'), 'remote query works')
 
@@ -88,4 +42,44 @@ test('Server startup - custom config', t => {
       })
     }
   })
+
+  server.send({ action: 'READY' })
+}
+
+test('server startup', t => {
+  t.test('ssb-server, default config', t => {
+    const config = require('./server/default.config.js')
+    const processPath = 'ssb-server/default.js'
+
+    t.equal(config.path, join(home, '.ssb'), 'has default ~/.ssb folder')
+    t.equal(config.connections.incoming.net[0].port, 8008, 'e.g. has default port')
+    t.equal(config.friends.dunbar, 150, 'e.g. has default dunbar number')
+
+    checkStartUp({ t, config, processPath })
+  })
+
+  t.test('ssb-server, custom config', t => {
+    const config = require('./server/custom.config.js')
+    const processPath = 'ssb-server/custom.js'
+
+    t.equal(configCustom.path, join(home, '.testnet'), 'adjusts path to match appname')
+    t.equal(configCustom.connections.incoming.net[0].port, 9999, 'e.g. has default port')
+    t.equal(configCustom.friends.dunbar, 1500, 'has new default dunbar number')
+
+    checkStartUp({ t, config, processPath })
+  })
+
+  t.test('secret-stack, default config', t => {
+    const config = require('./server/default.config.js')
+    const processPath = 'secret-stack/default.js'
+    checkStartUp({ t, config, processPath })
+  })
+
+  t.test('secret-stack, custom config', t => {
+    const config = require('./server/custom.config.js')
+    const processPath = 'secret-stack/custom.js'
+    checkStartUp({ t, config, processPath })
+  })
+
+  t.end()
 })
