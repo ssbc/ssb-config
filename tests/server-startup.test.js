@@ -51,7 +51,7 @@ test('server startup', t => {
     const config = require('./server/default.config.js')
     const processPath = 'ssb-server/default.js'
 
-    t.equal(config.path, `${home}/.ssb`, 'has default ~/.ssb folder')
+    t.equal(config.path, join(home, '.ssb'), 'has default ~/.ssb folder')
     t.equal(config.connections.incoming.net[0].port, 8008, 'e.g. has default port')
     t.equal(config.friends.dunbar, 150, 'e.g. has default dunbar number')
 
@@ -62,7 +62,7 @@ test('server startup', t => {
     const config = require('./server/custom.config.js')
     const processPath = 'ssb-server/custom.js'
 
-    t.equal(configCustom.path, `${home}/.testnet`, 'adjusts path to match appname')
+    t.equal(configCustom.path, join(home, '.testnet'), 'adjusts path to match appname')
     t.equal(configCustom.connections.incoming.net[0].port, 9999, 'e.g. has default port')
     t.equal(configCustom.friends.dunbar, 1500, 'has new default dunbar number')
 
