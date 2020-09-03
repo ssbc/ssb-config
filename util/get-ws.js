@@ -1,19 +1,26 @@
 var get = require('lodash.get')
 
 module.exports = function getNet (config) {
-  var connection = get(config, 'connections.incoming.ws', [])
-    .find(function (transport) {
-      return isAccessible(transport)
-    })
+  const conns = get(config, 'connections.incoming.ws', [])
 
-  if (!connection) return
-
-  return connection
+  return (
+    conns.find(isPublic) ||
+    conns.find(isLocal) ||
+    conns.find(isDevice)
+  )
 }
 
-function isAccessible (transport) {
+function isPublic (transport) {
+  const scope = 'public' // internet
+
+  return (
+    transport.scope === scope ||
+    transport.scope.includes(scope)
+  )
+}
+
+function isLocal (transport) {
   const scopes = [
-    'public', // internet
     'local', // local wifi
     'private' // (alias of local)
   ]
@@ -21,4 +28,13 @@ function isAccessible (transport) {
   return scopes.some(s => {
     return transport.scope === s || transport.scope.includes(s)
   })
+}
+
+function isDevice (transport) {
+  const scope = 'device' // local device only
+
+  return (
+    transport.scope === scope ||
+    transport.scope.includes(scope)
+  )
 }
