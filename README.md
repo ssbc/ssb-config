@@ -140,7 +140,7 @@ Each transport can have an array of different configurations passed to it, these
 - `host` _(string)_ IP or hostname that the listener is binding on.
 - `scope` _(string | array of string)_ scope Determines the set of network interfaces to bind the server to. 
 If scope is an array, then the server will bind to all the selected ports. [See more about scopes below](#scopes).
-- `external` _(array of strings)_ For use in combination with public scope. this is the external domain given 
+- `external` _(string)_ For use in combination with public scope. this is the external domain given 
 out as the address to peers.
 - `key` _(string)_ Used together with `cert` for ws plugin to run over TLS (wss). Needs to be a path to where 
 the key is stored.
@@ -191,7 +191,7 @@ can specify a `public` scope as your `incoming.net` by defining the `external` p
 { 
   "incoming": {
     "net": [
-      { "scope": "public",  "external": ["cryptop.home"], "transform": "shs", "port": 8008 },
+      { "scope": "public",  "external": "cryptop.home", "transform": "shs", "port": 8008 },
       { "scope": "private", "transform": "shs", "port": 8008, "host": "internal1.con.taine.rs" },
     ]
   },
