@@ -169,7 +169,7 @@ Addresses for scopes are provides `secret-stack`s `getAddress(scope)` method, wh
 
 ### Example `connnections` configurations
 
-If you want your Pub to be a [Tor](https://torproject.org) [onion service](https://community.torproject.org/onion-services), your config should resemble the below. This will allow the Pub to accept .onion invites and to be administered (only) on localhost. [ssb-server](https://github.com/ssbc/ssb-server) will use `localhost:9050` (Tor default) as the socks server.
+If you want your Pub to be a [Tor](https://torproject.org) [onion service](https://community.torproject.org/onion-services), your config should resemble the below. This will allow the Pub to accept .onion invites and to be administered (only) on localhost. [ssb-server](https://github.com/ssbc/ssb-server) will use the Tor default SOCKS server `localhost:9050`
 
 ```json
 {
