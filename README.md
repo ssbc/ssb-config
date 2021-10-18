@@ -169,13 +169,14 @@ Addresses for scopes are provides `secret-stack`s `getAddress(scope)` method, wh
 
 ### Example `connnections` configurations
 
-If you only want to use [Tor](https://torproject.org) to create outgoing connections you can specify your 
-`outgoing` like this. It will use `localhost:9050` as the socks server for creating this.
+If you want your Pub to be a [Tor](https://torproject.org) [onion service](https://community.torproject.org/onion-services), your config should resemble the below. This will allow the Pub to accept .onion invites and to be administered (only) on localhost. [ssb-server](https://github.com/ssbc/ssb-server) will use the Tor default SOCKS server `localhost:9050`
 
 ```json
 {
+  "allowPrivate": "true",
+  "host": "127.0.0.1",
   "incoming": {
-    "net": [{ "port": 8008, "scope": "public", "transform": "shs" }]
+    "net":  [{ "host": "127.0.0.1", "port": 8008, "scope": "public", "transform": "shs" }]
   },
   "outgoing": {
     "onion": [{ "transform": "shs" }]
