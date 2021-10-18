@@ -14,6 +14,6 @@ test('custom: keys injected', t => {
   const keys = ssbKeys.generate()
   const config = Config('testnet', { keys })
 
-  t.equal(keys.public, config.keys.public,  'keys exist')
+  t.equal(keys.public, config.keys.public, 'keys exist')
   t.end()
 })

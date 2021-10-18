@@ -25,11 +25,10 @@ module.exports = function (config) {
     return defaultPort
   }
 
-
-  //legacy configuration didn't have a scopes concept,
-  //so interpret that as every scope at once.
-  //I think there is probably a better way to do this,
-  //but am fairly sure this will probably work.
+  // legacy configuration didn't have a scopes concept,
+  // so interpret that as every scope at once.
+  // I think there is probably a better way to do this,
+  // but am fairly sure this will probably work.
   const allScopes = ['device', 'local', 'public']
 
   // If `config.host` is defined then we don't need to enumerate interfaces.
@@ -68,35 +67,52 @@ module.exports = function (config) {
     incoming = Object.keys(defaultPorts).map((service) => {
       return {
         service,
-        interfaces: Object.values(interfaces).reduce((acc, val) => {
-          // Future TODO: replace with shiny new `Array.prototype.flat()`.
-          return acc.concat(val)
-        }, []).filter(item => {
-          // We want to avoid scoped IPv6 addresses since they don't seem to
-          // play nicely with the Node.js networking stack. These addresses
-          // often start with `fe80` and throw EINVAL when we try to bind to
-          // them.
-          return item.scopeid == null || item.scopeid === 0
-        }).map(item => {
+        interfaces: Object.values(interfaces)
+          .reduce((acc, val) => {
+            // Future TODO: replace with shiny new `Array.prototype.flat()`.
+            return acc.concat(val)
+          }, [])
+          .filter(item => {
+            // We want to avoid scoped IPv6 addresses since they don't seem to
+            // play nicely with the Node.js networking stack. These addresses
+            // often start with `fe80` and throw EINVAL when we try to bind to
+            // them.
+            return item.scopeid == null || item.scopeid === 0
+          })
+          .reduce((acc, cur) => {
+            // It's possible to have two interfaces with the same IP address,
+            // but we don't want to try to listen on both of them. This only
+            // adds the interface to the list if it hasn't already been added.
+            const found = acc.find((item) =>
+              item.address === cur.address
+            )
+
+            if (found == null) {
+              acc.push(cur)
+            }
+
+            return acc
+          }, [])
+          .map(item => {
           // This bit is simple because the ssb-config options for `incoming`
           // can either be hardcoded or directly inferred from `interfaces`.
 
-          //if an interface is internal, it can only be accessed from the device.
-          //if it's got a private ip address it can only be accessed from some network.
-          //otherwise, it's presumably a publically accessable address.
-          var scope = (
-            item.internal ? 'device'
-            : ip.isPrivate(item.address) ? 'local'
-            : 'public'
-          )
+            // if an interface is internal, it can only be accessed from the device.
+            // if it's got a private ip address it can only be accessed from some network.
+            // otherwise, it's presumably a publically accessable address.
+            var scope = (
+              item.internal ? 'device'
+                : ip.isPrivate(item.address) ? 'local'
+                  : 'public'
+            )
 
-          return {
-            host: item.address,
-            port: getPort(service),
-            scope: [scope],
-            transform: 'shs'
-          }
-        })
+            return {
+              host: item.address,
+              port: getPort(service),
+              scope: [scope],
+              transform: 'shs'
+            }
+          })
       }
     }).reduce((result, obj) => {
       // This `reduce()` step is necessary because we need to return an object
